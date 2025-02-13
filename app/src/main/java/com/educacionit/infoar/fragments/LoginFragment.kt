@@ -1,10 +1,11 @@
-package com.educacionit.infoar
+package com.educacionit.infoar.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.educacionit.infoar.R
 import com.educacionit.infoar.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {

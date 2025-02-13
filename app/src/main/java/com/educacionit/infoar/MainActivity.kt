@@ -2,6 +2,7 @@ package com.educacionit.infoar
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.educacionit.infoar.fragments.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
