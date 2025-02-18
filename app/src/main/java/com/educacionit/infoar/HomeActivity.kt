@@ -41,9 +41,9 @@ class HomeActivity : AppCompatActivity() {
 
         // Bottom Navigation Click Listener
         bottomNavigationView.setOnItemSelectedListener { item ->
-            TODO("Una vez creado el bottom_nav_menu.xml, crear resto de fragments y configurarlos")
+            TODO("Una vez creado el bottom_nav_menu.xml, setear fragments")
             when (item.itemId) {
-                1 -> loadFragment(NoticiasFragment())
+
             }
             true
         }
