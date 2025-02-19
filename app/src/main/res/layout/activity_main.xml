@@ -19,7 +19,7 @@
      No se puede cambiar en tiempo de ejecución. -->
     <!--    <fragment
             android:id="@+id/fragment"
-            android:name="com.educacionit.infoar.LoginFragment"
+            android:name="com.educacionit.infoar.fragments.LoginFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>-->
 
