@@ -6,9 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.educacionit.infoar.R
-import com.educacionit.infoar.TermsAndConditionsFragment
 import com.educacionit.infoar.databinding.FragmentLoginBinding
-import com.educacionit.infoar.fragments.communication.LoginListener
 
 class LoginFragment: Fragment() {
 
