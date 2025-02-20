@@ -1,10 +1,11 @@
-package com.educacionit.infoar
+package com.educacionit.infoar.presentacion
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.educacionit.infoar.fragments.LoginFragment
-import com.educacionit.infoar.fragments.communication.LoginListener
+import com.educacionit.infoar.R
+import com.educacionit.infoar.presentacion.fragments.LoginFragment
+import com.educacionit.infoar.presentacion.fragments.communication.LoginListener
 
 class MainActivity : AppCompatActivity(), LoginListener {
 

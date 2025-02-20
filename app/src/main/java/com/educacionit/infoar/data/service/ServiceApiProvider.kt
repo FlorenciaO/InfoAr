@@ -1,4 +1,4 @@
-package com.educacionit.infoar.repository.service
+package com.educacionit.infoar.data.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

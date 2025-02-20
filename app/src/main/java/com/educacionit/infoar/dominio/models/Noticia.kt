@@ -1,4 +1,4 @@
-package com.educacionit.infoar.models
+package com.educacionit.infoar.dominio.models
 
 data class Noticia(
     val id: String,

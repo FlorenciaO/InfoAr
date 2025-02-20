@@ -1,4 +1,4 @@
-package com.educacionit.infoar.fragments
+package com.educacionit.infoar.presentacion.fragments
 
 import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.infoar.R
-import com.educacionit.infoar.adapters.UsuariosListAdapter
+import com.educacionit.infoar.presentacion.adapters.UsuariosListAdapter
 import com.educacionit.infoar.databinding.FragmentUsuariosBinding
 import kotlinx.coroutines.launch
 

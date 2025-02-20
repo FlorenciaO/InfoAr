@@ -1,4 +1,4 @@
-package com.educacionit.infoar
+package com.educacionit.infoar.presentacion
 
 import android.view.View
 import androidx.activity.enableEdgeToEdge

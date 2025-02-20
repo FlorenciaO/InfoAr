@@ -1,4 +1,4 @@
-package com.educacionit.infoar
+package com.educacionit.infoar.presentacion
 
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.educacionit.infoar.R
 import com.educacionit.infoar.databinding.ActivityHomeBinding
-import com.educacionit.infoar.fragments.NoticiasFragment
+import com.educacionit.infoar.presentacion.fragments.NoticiasFragment
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
@@ -30,7 +31,10 @@ class HomeActivity : AppCompatActivity() {
 
         // Configurar Toolbar con Navigation Drawer
         setSupportActionBar(toolbar)
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer)
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
+            R.string.open_drawer,
+            R.string.close_drawer
+        )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 

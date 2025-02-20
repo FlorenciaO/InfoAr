@@ -6,7 +6,7 @@
     android:id="@+id/main"
     tools:viewBindingIgnore="true"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".presentacion.MainActivity">
 
     <!-- Opcion 1: Agregado dinámico. Dentro de .MainActivity se decidirá qué fragment usar.
      Es el método de preferencia y permite reemplazo en tiempo de ejecución. -->

@@ -1,4 +1,4 @@
-package com.educacionit.infoar.fragments
+package com.educacionit.infoar.presentacion.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater

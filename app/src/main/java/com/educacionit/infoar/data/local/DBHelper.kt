@@ -1,4 +1,4 @@
-package com.educacionit.infoar.repository.local
+package com.educacionit.infoar.data.local
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
