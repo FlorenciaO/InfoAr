@@ -10,7 +10,7 @@ import com.educacionit.infoar.TermsAndConditionsFragment
 import com.educacionit.infoar.databinding.FragmentLoginBinding
 import com.educacionit.infoar.fragments.communication.LoginListener
 
-class LoginFragment: Fragment() {
+class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
