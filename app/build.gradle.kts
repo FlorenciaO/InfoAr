@@ -60,4 +60,8 @@ dependencies {
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // ORM Lite
+    implementation("com.j256.ormlite:ormlite-core:5.1")
+    implementation("com.j256.ormlite:ormlite-android:5.1")
 }
