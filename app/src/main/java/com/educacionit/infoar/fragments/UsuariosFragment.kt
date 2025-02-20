@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.infoar.R
 import com.educacionit.infoar.adapters.UsuariosListAdapter
 import com.educacionit.infoar.databinding.FragmentUsuariosBinding
+import kotlinx.coroutines.launch
 
 class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterListener {
 
@@ -39,6 +41,8 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
             layoutManager = LinearLayoutManager(context, orientation, false)
             adapter = usersAdapter
         }
+
+        // TODO(Obtener usuarios y setear lista en adapter)
 
         return binding.root
     }

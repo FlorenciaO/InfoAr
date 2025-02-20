@@ -35,6 +35,8 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
             adapter = newsAdapter
         }
 
+        // TODO(Obtener usuarios y setear lista en adapter)
+
         return binding.root
     }
 
