@@ -39,9 +39,8 @@ class NoticiasListAdapter(
                     }
                     titleTv.text = title
                     usernameTimeAgoTv.text = resources.getString(
-                        R.string.noticia_date_format,
+                        R.string.noticia_usuario_text,
                         byUser,
-                        updatedAt
                     )
                     root.setOnClickListener {
                         listener.onNewsItemClicked(id)

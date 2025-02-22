@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsapp.domain.model.Usuario
+import com.educacionit.infoar.models.Usuario
 import com.educacionit.infoar.presentacion.adapters.UsuariosListAdapter.UsuarioViewHolder
 import com.educacionit.infoar.databinding.ViewUserItemBinding
 

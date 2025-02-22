@@ -15,5 +15,5 @@
     <string name="noticias_title_screen">Entérate de las noticias alrededor del mundo!</string>
     <string name="usuarios_title_screen">Conozca a nuestros usuarios</string>
     <string name="ver_mapa">Ver mapa  ></string>
-    <string name="noticia_date_format">%1$s  ·  %2$s</string>
+    <string name="noticia_usuario_text">escrito por %1$s</string>
 </resources>
