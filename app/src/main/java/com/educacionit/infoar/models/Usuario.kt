@@ -1,4 +1,4 @@
-package com.example.newsapp.domain.model
+package com.educacionit.infoar.models
 
 data class Usuario(
     val id: String,
