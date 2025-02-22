@@ -5,7 +5,5 @@ data class Noticia(
     val title: String,
     val content: String,
     val image: String,
-    val thumbnail: String,
-    val updatedAt: String,
     val byUser: String
 )
