@@ -16,4 +16,8 @@
     </style>
 
     <style name="Theme.InfoAr" parent="Base.Theme.InfoAr" />
+
+    <style name="RoundedCornersImage">
+        <item name="cornerSize">20%</item>
+    </style>
 </resources>
