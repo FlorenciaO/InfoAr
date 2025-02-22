@@ -64,4 +64,11 @@ dependencies {
     // ORM Lite
     implementation("com.j256.ormlite:ormlite-core:5.1")
     implementation("com.j256.ormlite:ormlite-android:5.1")
+
+    // Mockito
+    testImplementation("org.mockito:mockito-core:2.19.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:2.19.0")
+
+    // Test coroutines
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
 }
