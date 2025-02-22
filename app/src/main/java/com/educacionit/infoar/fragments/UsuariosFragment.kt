@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.infoar.R
 import com.educacionit.infoar.adapters.UsuariosListAdapter
 import com.educacionit.infoar.databinding.FragmentUsuariosBinding
+import com.educacionit.infoar.models.Usuario
 
 class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterListener {
 
@@ -57,5 +58,21 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
     }
 
     override fun onGoToMapClicked(userId: String, userName: String) {
+    }
+
+    private fun fakeData(): List<Usuario> {
+        return listOf(
+            Usuario(
+                id = "1",
+                userName = "Florencia Olivera",
+                companyName = "MODO",
+                address = Usuario.Address(
+                    "",
+                    "",
+                    0.0,
+                    0.0
+                )
+            )
+        )
     }
 }
