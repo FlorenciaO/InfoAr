@@ -2,12 +2,13 @@ package com.educacionit.infoar
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.educacionit.infoar.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-   private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +23,23 @@ class MainActivity : AppCompatActivity() {
          *
          * TODO(Tarea: Darle la funcionalidad al checkbox para saltearse el login cuando sea requerido)
          */
+
+        binding.btnIniciarSesion.setOnClickListener {
+            val usuario: String = binding.etUsuario.text.toString()
+            val contrasenia: String = binding.etContrasenia.text.toString()
+
+            if (usuario.isNotEmpty() && contrasenia.isNotEmpty() && contrasenia.length >= 8) {
+                navigateToHome(usuario)
+            } else {
+                Toast.makeText(this, "Ingrese una contraseña válida", Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun navigateToHome(usuario: String) {
-        val intent = Intent(this, HomeActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java).apply {
+            putExtra("USER", usuario)
+        }
         startActivity(intent)
         finish()
     }
