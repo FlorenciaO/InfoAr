@@ -8,12 +8,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.educacionit.infoar.R
 import com.educacionit.infoar.databinding.FragmentLoginBinding
+import com.educacionit.infoar.fragments.communication.LoginListener
 
 class LoginFragment private constructor(): Fragment() {
 
+    private lateinit var loginListener: LoginListener
+
     companion object {
-        fun newInstance(): LoginFragment {
-            return LoginFragment()
+        fun newInstance(loginListener: LoginListener): LoginFragment {
+            return LoginFragment().apply {
+                this.loginListener = loginListener
+            }
         }
     }
 
@@ -58,7 +63,7 @@ class LoginFragment private constructor(): Fragment() {
     }
 
     private fun navigateToHome(usuario: String) {
-        // TODO(Como navegamos a HomeActivity?)
+        loginListener.onLoginSuccessful(usuario)
     }
 
 

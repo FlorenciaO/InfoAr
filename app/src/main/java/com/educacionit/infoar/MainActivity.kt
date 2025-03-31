@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.educacionit.infoar.HomeActivity.Companion.USER_PARAM_EXTRA
 import com.educacionit.infoar.fragments.LoginFragment
+import com.educacionit.infoar.fragments.TermsAndConditionsFragment
 import com.educacionit.infoar.fragments.communication.LoginListener
 
 class MainActivity : AppCompatActivity(), LoginListener {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity(), LoginListener {
         applySystemPaddings(findViewById(R.id.main))
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view, LoginFragment.newInstance())
+            .add(R.id.fragment_container_view, LoginFragment.newInstance(this))
             .commit()
     }
 
