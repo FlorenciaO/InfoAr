@@ -13,27 +13,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        applySystemPaddings(binding.root)
 
-        /**
-         * Practica de Sintaxis N1. Repaso de variables, funciones, etc
-         * 1. Darle la funcionalidad al botón Iniciar Sesión
-         * 2. Validar que la contraseña tenga 8 caracteres min y que los campos no estén vacios
-         *
-         * TODO(Tarea: Darle la funcionalidad al checkbox para saltearse el login cuando sea requerido)
-         */
+        with(binding) {
+            setContentView(root)
+            applySystemPaddings(root)
 
-        binding.btnIniciarSesion.setOnClickListener {
-            val usuario: String = binding.etUsuario.text.toString()
-            val contrasenia: String = binding.etContrasenia.text.toString()
+            /**
+             * Practica de Sintaxis N1. Repaso de variables, funciones, etc
+             * 1. Darle la funcionalidad al botón Iniciar Sesión
+             * 2. Validar que la contraseña tenga 8 caracteres min y que los campos no estén vacios
+             *
+             * TODO(Tarea: Darle la funcionalidad al checkbox para saltearse el login cuando sea requerido)
+             */
 
-            if (usuario.isNotEmpty() && contrasenia.isNotEmpty() && contrasenia.length >= 8) {
-                navigateToHome(usuario)
-            } else {
-                Toast.makeText(this, "Ingrese una contraseña válida", Toast.LENGTH_LONG).show()
+            btnIniciarSesion.setOnClickListener {
+                val usuario: String = etUsuario.text.toString()
+                val contrasenia: String = etContrasenia.text.toString()
+
+                if (usuario.isNotEmpty() && contrasenia.isNotEmpty() && contrasenia.length >= 8) {
+                    navigateToHome(usuario)
+                } else {
+                    Toast.makeText(this@MainActivity, "Ingrese una contraseña válida", Toast.LENGTH_LONG).show()
+                }
             }
         }
+
     }
 
     private fun navigateToHome(usuario: String) {
