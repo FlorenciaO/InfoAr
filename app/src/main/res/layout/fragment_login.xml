@@ -27,7 +27,7 @@
         android:text="@string/ingresar_contrasenia" />
 
     <EditText
-        android:id="@+id/etContraseña"
+        android:id="@+id/etContrasenia"
         android:minHeight="48dp"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="20dp"
