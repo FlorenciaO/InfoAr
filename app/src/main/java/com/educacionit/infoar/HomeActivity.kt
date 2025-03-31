@@ -1,16 +1,16 @@
 package com.educacionit.infoar
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.educacionit.infoar.databinding.ActivityHomeBinding
-import com.educacionit.infoar.databinding.ActivityMainBinding
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+
+    companion object {
+        const val USER_PARAM_EXTRA = "USER"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(binding.root)
         applySystemPaddings(binding.root)
 
-        val usuario = intent.extras?.getString("USER")
+        val usuario = intent.extras?.getString(USER_PARAM_EXTRA)
         binding.homeTextView.text = getString(R.string.home_text, usuario)
     }
 }

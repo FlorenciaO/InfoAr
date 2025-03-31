@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.educacionit.infoar.R
 import com.educacionit.infoar.databinding.FragmentLoginBinding
 
-class LoginFragment: Fragment() {
+class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -19,14 +20,39 @@ class LoginFragment: Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        binding.btnIniciarSesion.setOnClickListener {
-            // TODO(Como navegamos a HomeActivity?)
-        }
+        with(binding) {
 
-        binding.termsAndCondTextView.setOnClickListener {
-            navigateToTermsAndCondFragment()
+            binding.btnIniciarSesion.setOnClickListener {
+                /**
+                 * TODO(Tarea: Darle la funcionalidad al checkbox para saltearse el login cuando sea requerido)
+                 */
+
+
+                val usuario: String = etUsuario.text.toString()
+                val contrasenia: String = etContrasenia.text.toString()
+
+                if (usuario.isNotEmpty() && contrasenia.isNotEmpty() && contrasenia.length >= 8) {
+                    navigateToHome(usuario)
+                } else {
+                    Toast.makeText(
+                        context,
+                        "Ingrese una contraseña válida",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+
+            }
+
+            termsAndCondTextView.setOnClickListener {
+                navigateToTermsAndCondFragment()
+            }
+            return root
         }
-        return binding.root
+    }
+
+    private fun navigateToHome(usuario: String) {
+        // TODO(Como navegamos a HomeActivity?)
     }
 
 
