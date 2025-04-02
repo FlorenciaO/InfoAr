@@ -14,13 +14,9 @@
     <item
         android:title="">
         <menu>
-
-            <!--
-            TODO(Agregar icono para el log out)
-            android:icon="@drawable/nav_logout"
-            -->
             <item
                 android:id="@+id/nav_logout"
+                android:icon="@drawable/nav_logout"
                 android:title="Cerrar sesión"/>
         </menu>
     </item>
