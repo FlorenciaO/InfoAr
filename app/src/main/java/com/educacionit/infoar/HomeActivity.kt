@@ -17,6 +17,9 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
+    private var newsFragment = NoticiasFragment()
+    private var usersFragment = UsuariosFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
@@ -43,17 +46,17 @@ class HomeActivity : AppCompatActivity() {
 
             // Cargar fragmento inicial (Home)
             if (savedInstanceState == null) {
-                loadFragment(NoticiasFragment())
+                loadFragment(usersFragment)
             }
 
             // Bottom Navigation Click Listener
             bottomNavigation.setOnItemSelectedListener { bottomItem ->
                 when (bottomItem.itemId) {
                     R.id.tab_user -> {
-                        loadFragment(UsuariosFragment())
+                        loadFragment(usersFragment)
                     }
                     R.id.tab_news -> {
-                        loadFragment(NoticiasFragment())
+                        loadFragment(newsFragment)
                     }
                 }
                 true
