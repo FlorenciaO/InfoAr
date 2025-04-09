@@ -2,6 +2,7 @@ package com.educacionit.infoar.fragments
 
 import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,21 +16,27 @@ import com.educacionit.infoar.R
 import com.educacionit.infoar.adapters.UsuariosListAdapter
 import com.educacionit.infoar.databinding.FragmentUsuariosBinding
 import com.educacionit.infoar.models.Usuario
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterListener {
 
     private var _binding: FragmentUsuariosBinding? = null
     private val binding get() = _binding!!
+    private val usersAdapter = UsuariosListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUsuariosBinding.inflate(inflater, container, false)
 
-        val usersAdapter = UsuariosListAdapter(this)
+
         binding.usersList.apply {
             val orientation = RecyclerView.VERTICAL
             val itemDecoration = DividerItemDecoration(context, orientation)
@@ -43,9 +50,24 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
             adapter = usersAdapter
         }
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // TODO(Obtener usuarios y setear lista en adapter)
 
-        return binding.root
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { // Inicio de corrutina
+            showLoading()
+
+            val listaDeUsuarios = fakeData()
+
+            Log.d("UsuariosFragment", "Lista de usuarios: $listaDeUsuarios")
+
+            finishLoading()
+
+            usersAdapter.setUsuariosList(listaDeUsuarios)
+        }
     }
 
     override fun onDestroyView() {
@@ -64,12 +86,37 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
     override fun onGoToMapClicked(userId: String, userName: String) {
     }
 
-    private fun fakeData(): List<Usuario> {
-        return listOf(
+    private suspend fun fakeData(): List<Usuario> = withContext(Dispatchers.IO) {
+        delay(2000)
+
+        // A futuro, aqui iria una llamada a los servicios WEB
+        listOf(
             Usuario(
                 id = "1",
                 userName = "Florencia Olivera",
                 companyName = "MODO",
+                address = Usuario.Address(
+                    "",
+                    "",
+                    0.0,
+                    0.0
+                )
+            ),
+            Usuario(
+                id = "2",
+                userName = "John Doe",
+                companyName = "XYZ Company",
+                address = Usuario.Address(
+                    "",
+                    "",
+                    0.0,
+                    0.0
+                )
+            ),
+            Usuario(
+                id = "3",
+                userName = "Pepito",
+                companyName = "Juanita",
                 address = Usuario.Address(
                     "",
                     "",

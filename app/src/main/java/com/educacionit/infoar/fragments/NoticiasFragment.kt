@@ -1,6 +1,7 @@
 package com.educacionit.infoar.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +16,17 @@ import com.educacionit.infoar.adapters.NoticiasListAdapter.NoticiasListAdapterLi
 import com.educacionit.infoar.databinding.FragmentNoticiasBinding
 import com.educacionit.infoar.models.Noticia
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
 
     private var _binding: FragmentNoticiasBinding? = null
     private val binding get() = _binding!!
+    private val newsAdapter = NoticiasListAdapter(this)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,16 +35,49 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
     ): View {
         _binding = FragmentNoticiasBinding.inflate(inflater, container, false)
 
-        val newsAdapter = NoticiasListAdapter(this)
         binding.newsList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = newsAdapter
         }
 
-        // TODO(Obtener usuarios y setear lista en adapter)
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { // Inicio de corrutina
+            showLoading()
+            val listaDeNoticias: List<Noticia> = fakeData()
+
+            Log.d("NoticiasFragment", "Lista de noticias: $listaDeNoticias")
+
+            finishLoading()
+            newsAdapter.setNoticiasList(listaDeNoticias)
+        }
+
+        // Lanzamos una corutina en el dispatcher IO (hilo secundario)
+        CoroutineScope(Dispatchers.IO).launch {
+            // Operacion
+            delay(60000) // simulamos una operación que tarda
+
+            // ERROR: Intentamos modificar la UI desde un hilo que no es el principal
+            // Exception lanzada: android.view.ViewRootImpl$CalledFromWrongThreadException
+            Log.d("NoticiasFragment", "Intentamos modificar la UI desde un hilo que no es el principal")
+            binding.title.visibility = View.GONE
+            binding.title.text = "Intentamos modificar la UI desde un hilo que no es el principal"
+
+            /**
+             * Moraleja:
+             * Android no garantiza que siempre se lanzará una excepción cuando tocás la UI desde un hilo secundario.
+             * Aunque la documentación es clara en cuanto a que está prohibido, la realidad técnica va a depender de varios factores.
+             * No todas las propiedades de una View validan el hilo.
+             * textView.text = "..." puede pasar "silenciosamente", dependiendo del Android API level y fabricante.
+             *
+             * @see https://developer.android.com/topic/performance/threads?hl=es-419
+             */
+        }
     }
 
     override fun onDestroyView() {
@@ -58,8 +97,10 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
         binding.circularProgressIndicator.visibility = View.INVISIBLE
     }
 
-    private fun fakeData(): List<Noticia> {
-        return listOf(
+    private suspend fun fakeData(): List<Noticia> = withContext(Dispatchers.IO) {
+        delay(2000)
+
+        listOf(
             Noticia(
                 id = "1",
                 title = "Asaltaron un banco de Buenos Aires",
