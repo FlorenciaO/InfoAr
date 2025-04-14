@@ -58,9 +58,9 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
         }
 
         // Lanzamos una corutina en el dispatcher IO (hilo secundario)
-        CoroutineScope(Dispatchers.IO).launch {
+        /* CoroutineScope(Dispatchers.Main).launch {
             // Operacion
-            delay(60000) // simulamos una operación que tarda
+            delay(2000) // simulamos una operación que tarda
 
             // ERROR: Intentamos modificar la UI desde un hilo que no es el principal
             // Exception lanzada: android.view.ViewRootImpl$CalledFromWrongThreadException
@@ -77,7 +77,7 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
              *
              * @see https://developer.android.com/topic/performance/threads?hl=es-419
              */
-        }
+        } */
     }
 
     override fun onDestroyView() {

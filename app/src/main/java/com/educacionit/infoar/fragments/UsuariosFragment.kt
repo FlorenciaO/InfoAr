@@ -14,12 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.infoar.R
 import com.educacionit.infoar.adapters.UsuariosListAdapter
+import com.educacionit.infoar.data.UsuariosRepositoryImpl
 import com.educacionit.infoar.databinding.FragmentUsuariosBinding
 import com.educacionit.infoar.models.Usuario
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -87,43 +85,7 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
     }
 
     private suspend fun fakeData(): List<Usuario> = withContext(Dispatchers.IO) {
-        delay(2000)
-
-        // A futuro, aqui iria una llamada a los servicios WEB
-        listOf(
-            Usuario(
-                id = "1",
-                userName = "Florencia Olivera",
-                companyName = "MODO",
-                address = Usuario.Address(
-                    "",
-                    "",
-                    0.0,
-                    0.0
-                )
-            ),
-            Usuario(
-                id = "2",
-                userName = "John Doe",
-                companyName = "XYZ Company",
-                address = Usuario.Address(
-                    "",
-                    "",
-                    0.0,
-                    0.0
-                )
-            ),
-            Usuario(
-                id = "3",
-                userName = "Pepito",
-                companyName = "Juanita",
-                address = Usuario.Address(
-                    "",
-                    "",
-                    0.0,
-                    0.0
-                )
-            )
-        )
+        val repository = UsuariosRepositoryImpl()
+        repository.getUsuarios()
     }
 }
