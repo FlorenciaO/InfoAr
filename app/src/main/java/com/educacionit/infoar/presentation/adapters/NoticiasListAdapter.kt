@@ -1,4 +1,4 @@
-package com.educacionit.infoar.adapters
+package com.educacionit.infoar.presentation.adapters
 
 import android.content.res.Resources
 import android.view.LayoutInflater
@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.infoar.R
-import com.educacionit.infoar.models.Noticia
-import com.educacionit.infoar.adapters.NoticiasListAdapter.NoticiaViewHolder
+import com.educacionit.infoar.domain.models.Noticia
+import com.educacionit.infoar.presentation.adapters.NoticiasListAdapter.NoticiaViewHolder
 import com.educacionit.infoar.databinding.ViewNewsItemBinding
-import com.educacionit.infoar.models.Usuario
+import com.educacionit.infoar.domain.models.Usuario
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 

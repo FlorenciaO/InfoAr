@@ -1,6 +1,6 @@
-package com.educacionit.infoar
+package com.educacionit.infoar.data.remote.dto
 
-import com.educacionit.infoar.models.Usuario
+import com.educacionit.infoar.domain.models.Usuario
 
 data class UserDTO(
     val id: Int,

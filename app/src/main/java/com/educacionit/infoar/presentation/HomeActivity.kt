@@ -1,16 +1,14 @@
-package com.educacionit.infoar
+package com.educacionit.infoar.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.educacionit.infoar.R
 import com.educacionit.infoar.databinding.ActivityHomeBinding
-import com.educacionit.infoar.fragments.NoticiasFragment
-import com.educacionit.infoar.fragments.UsuariosFragment
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
+import com.educacionit.infoar.presentation.fragments.NoticiasFragment
+import com.educacionit.infoar.presentation.fragments.UsuariosFragment
 import com.google.android.material.snackbar.Snackbar
 
 class HomeActivity : AppCompatActivity() {
