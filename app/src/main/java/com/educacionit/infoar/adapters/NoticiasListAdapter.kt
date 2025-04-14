@@ -9,12 +9,13 @@ import com.educacionit.infoar.R
 import com.educacionit.infoar.models.Noticia
 import com.educacionit.infoar.adapters.NoticiasListAdapter.NoticiaViewHolder
 import com.educacionit.infoar.databinding.ViewNewsItemBinding
+import com.educacionit.infoar.models.Usuario
 import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation
 
 class NoticiasListAdapter(
     private val listener: NoticiasListAdapterListener,
-    private var list: MutableList<Noticia> = mutableListOf()
+    private var list: List<Noticia> = listOf()
 ) : RecyclerView.Adapter<NoticiaViewHolder>() {
 
     private val picasso = Picasso.get()
@@ -72,7 +73,7 @@ class NoticiasListAdapter(
     }
 
     private fun areContentsTheSame(oldNews: Noticia, news: Noticia): Boolean {
-        return oldNews == news
+        return oldNews.content == news.content
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticiaViewHolder {

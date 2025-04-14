@@ -2,12 +2,13 @@ package com.educacionit.infoar.repository.service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
 object ServiceApiProvider {
 
+    private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
+
     val service: ServiceAPI by lazy {
-        getRetrofitInstance("").create()
+        getRetrofitInstance(BASE_URL).create(ServiceAPI::class.java)
     }
 
     private fun getRetrofitInstance(baseUrl: String): Retrofit {

@@ -14,12 +14,12 @@ class MainActivity : AppCompatActivity(), LoginListener {
         applySystemPaddings(findViewById(R.id.main))
 
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_view, LoginFragment())
+            .add(R.id.fragment_container_view, LoginFragment.newInstance(this))
             .commit()
     }
 
 
-    override fun onLoginSuccessful() {
+    override fun onLoginSuccessful(usuario: String) {
         val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
