@@ -1,7 +1,7 @@
-package com.educacionit.infoar.repository.service
+package com.educacionit.infoar.data.remote
 
-import com.educacionit.infoar.NewsDTO
-import com.educacionit.infoar.UserDTO
+import com.educacionit.infoar.data.remote.dto.NewsDTO
+import com.educacionit.infoar.data.remote.dto.UserDTO
 import retrofit2.http.GET
 
 interface ServiceAPI {

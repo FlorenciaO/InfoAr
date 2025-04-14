@@ -1,4 +1,4 @@
-package com.educacionit.infoar.fragments
+package com.educacionit.infoar.presentation.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -11,10 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.infoar.R
-import com.educacionit.infoar.adapters.NoticiasListAdapter
-import com.educacionit.infoar.adapters.NoticiasListAdapter.NoticiasListAdapterListener
+import com.educacionit.infoar.presentation.adapters.NoticiasListAdapter
+import com.educacionit.infoar.presentation.adapters.NoticiasListAdapter.NoticiasListAdapterListener
 import com.educacionit.infoar.databinding.FragmentNoticiasBinding
-import com.educacionit.infoar.models.Noticia
+import com.educacionit.infoar.domain.models.Noticia
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

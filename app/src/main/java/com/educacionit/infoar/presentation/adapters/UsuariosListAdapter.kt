@@ -1,11 +1,11 @@
-package com.educacionit.infoar.adapters
+package com.educacionit.infoar.presentation.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.educacionit.infoar.models.Usuario
-import com.educacionit.infoar.adapters.UsuariosListAdapter.UsuarioViewHolder
+import com.educacionit.infoar.domain.models.Usuario
+import com.educacionit.infoar.presentation.adapters.UsuariosListAdapter.UsuarioViewHolder
 import com.educacionit.infoar.databinding.ViewUserItemBinding
 
 class UsuariosListAdapter(
