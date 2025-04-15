@@ -85,7 +85,7 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
     }
 
     private suspend fun fakeData(): List<Usuario> = withContext(Dispatchers.IO) {
-        val repository = UsuariosRepositoryImpl()
+        val repository = UsuariosRepositoryImpl(requireContext())
         repository.getUsuarios()
     }
 }

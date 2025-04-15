@@ -1,4 +1,4 @@
-package com.educacionit.infoar.data.remote
+package com.educacionit.infoar.data.remote.service
 
 import com.educacionit.infoar.data.remote.dto.NewsDTO
 import com.educacionit.infoar.data.remote.dto.UserDTO
