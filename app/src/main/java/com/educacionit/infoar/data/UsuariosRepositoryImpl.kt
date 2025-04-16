@@ -6,7 +6,7 @@ import com.educacionit.infoar.data.local.db.DBHelper
 import com.educacionit.infoar.data.local.entities.UserEntity
 import com.educacionit.infoar.data.remote.dto.toUserEntity
 import com.educacionit.infoar.domain.models.Usuario
-import com.educacionit.infoar.domain.contracts.UsuariosRepository
+import com.educacionit.infoar.domain.contracts.repository.UsuariosRepository
 import com.educacionit.infoar.data.remote.service.ServiceApiProvider
 import com.educacionit.infoar.data.remote.dto.toUsuario
 import com.educacionit.infoar.data.remote.service.ServiceAPI
