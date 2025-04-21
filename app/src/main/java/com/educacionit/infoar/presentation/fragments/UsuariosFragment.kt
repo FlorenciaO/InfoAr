@@ -2,7 +2,6 @@ package com.educacionit.infoar.presentation.fragments
 
 import android.graphics.drawable.ShapeDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +12,20 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.educacionit.infoar.R
-import com.educacionit.infoar.presentation.adapters.UsuariosListAdapter
 import com.educacionit.infoar.data.UsuariosRepositoryImpl
 import com.educacionit.infoar.databinding.FragmentUsuariosBinding
+import com.educacionit.infoar.domain.contracts.presenters.UsuariosPresenter
+import com.educacionit.infoar.domain.contracts.vistas.UsuariosView
 import com.educacionit.infoar.domain.models.Usuario
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.educacionit.infoar.domain.presenters.UsuariosPresenterImpl
+import com.educacionit.infoar.presentation.adapters.UsuariosListAdapter
 
-class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterListener {
+class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterListener, UsuariosView {
 
     private var _binding: FragmentUsuariosBinding? = null
     private val binding get() = _binding!!
     private val usersAdapter = UsuariosListAdapter(this)
+    private lateinit var presenter: UsuariosPresenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +34,10 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
     ): View {
         _binding = FragmentUsuariosBinding.inflate(inflater, container, false)
 
+        presenter = UsuariosPresenterImpl(
+            repository = UsuariosRepositoryImpl(requireContext()),
+            view = this
+        )
 
         binding.usersList.apply {
             val orientation = RecyclerView.VERTICAL
@@ -53,39 +57,28 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO(Obtener usuarios y setear lista en adapter)
-
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) { // Inicio de corrutina
-            showLoading()
-
-            val listaDeUsuarios = fakeData()
-
-            Log.d("UsuariosFragment", "Lista de usuarios: $listaDeUsuarios")
-
-            finishLoading()
-
-            usersAdapter.setUsuariosList(listaDeUsuarios)
-        }
+        presenter.init()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        presenter.clear()
     }
 
-    private fun showLoading() {
+    override fun showList(usuarios: List<Usuario>) {
+        usersAdapter.setUsuariosList(usuarios)
+    }
+
+    override fun showLoading() {
         binding.circularProgressIndicator.visibility = View.VISIBLE
     }
 
-    private fun finishLoading() {
+    override fun hideLoading() {
         binding.circularProgressIndicator.visibility = View.INVISIBLE
     }
 
     override fun onGoToMapClicked(userId: String, userName: String) {
-    }
 
-    private suspend fun fakeData(): List<Usuario> = withContext(Dispatchers.IO) {
-        val repository = UsuariosRepositoryImpl(requireContext())
-        repository.getUsuarios()
     }
 }
