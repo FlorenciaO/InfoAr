@@ -66,4 +66,7 @@ dependencies {
     // ORM Lite
     implementation("com.j256.ormlite:ormlite-core:5.1")
     implementation("com.j256.ormlite:ormlite-android:5.1")
+
+    // Testing (Mock)
+    testImplementation("org.mockito:mockito-core:5.11.0")
 }

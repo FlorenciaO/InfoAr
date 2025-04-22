@@ -3,16 +3,20 @@ package com.educacionit.infoar.domain.presenters
 import com.educacionit.infoar.domain.contracts.presenters.UsuariosPresenter
 import com.educacionit.infoar.domain.contracts.repository.UsuariosRepository
 import com.educacionit.infoar.domain.contracts.vistas.UsuariosView
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.annotations.TestOnly
 import kotlin.coroutines.CoroutineContext
 
 class UsuariosPresenterImpl(
     private val repository: UsuariosRepository,
     private val uiContext: CoroutineContext = Dispatchers.Main,
+    private val ioContext: CoroutineContext = Dispatchers.IO,
     private var view: UsuariosView? = null
 ) : UsuariosPresenter, CoroutineScope {
 
@@ -22,14 +26,14 @@ class UsuariosPresenterImpl(
     private var job: Job = Job()
 
     override fun init() {
-        launch(Dispatchers.IO) {
-            withContext(Dispatchers.Main) {
+        launch(ioContext) {
+            withContext(uiContext) {
                 view?.showLoading()
             }
 
             val lista = repository.getUsuarios()
 
-            withContext(Dispatchers.Main) {
+            withContext(uiContext) {
                 view?.showList(usuarios = lista)
                 view?.hideLoading()
             }
@@ -41,4 +45,10 @@ class UsuariosPresenterImpl(
         // Cancelar las corrutinas
         job.cancel()
     }
+
+    @TestOnly
+    fun getView() = view
+
+    @TestOnly
+    fun getJob() = job
 }

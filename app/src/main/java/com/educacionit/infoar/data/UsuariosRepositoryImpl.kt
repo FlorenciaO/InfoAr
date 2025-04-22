@@ -41,7 +41,8 @@ class UsuariosRepositoryImpl(context: Context): UsuariosRepository {
 
         if (listaDeUsuarios.isNotEmpty()) {
             val listaDeUserEntities = listaDeUsuarios.map { it.toUserEntity() }
-            dao.create(listaDeUserEntities)
+            listaDeUserEntities.forEach { dao.createOrUpdate(it) }
+
         }
 
         return listaDeUsuarios.map { it.toUsuario() }

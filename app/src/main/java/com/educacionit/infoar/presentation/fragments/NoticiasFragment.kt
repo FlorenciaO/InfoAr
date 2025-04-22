@@ -1,11 +1,21 @@
 package com.educacionit.infoar.presentation.fragments
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context.NOTIFICATION_SERVICE
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +25,8 @@ import com.educacionit.infoar.presentation.adapters.NoticiasListAdapter
 import com.educacionit.infoar.presentation.adapters.NoticiasListAdapter.NoticiasListAdapterListener
 import com.educacionit.infoar.databinding.FragmentNoticiasBinding
 import com.educacionit.infoar.domain.models.Noticia
+import com.educacionit.infoar.presentation.HomeActivity
+import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +36,10 @@ import kotlinx.coroutines.withContext
 
 class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
 
+    companion object {
+        const val CHANNEL_ID = "1"
+    }
+
     private var _binding: FragmentNoticiasBinding? = null
     private val binding get() = _binding!!
     private val newsAdapter = NoticiasListAdapter(this)
@@ -31,7 +47,7 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentNoticiasBinding.inflate(inflater, container, false)
 
@@ -39,6 +55,10 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = newsAdapter
+        }
+
+        binding.fab.setOnClickListener {
+            createNotification()
         }
 
         return binding.root
@@ -87,6 +107,45 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
 
     override fun onNewsItemClicked(newsId: String) {
 
+    }
+
+    private fun createNotification() {
+        val notificationManager: NotificationManager = requireContext().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        createChannel(notificationManager)
+
+        val intent = Intent(requireContext(), HomeActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent,
+            PendingIntent.FLAG_IMMUTABLE)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                //no pedirlo
+            } else {
+                Snackbar.make(binding.root, "Se necesita permisos de notificaciones", Snackbar.LENGTH_LONG).show()
+                // requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }else{
+            //no es necesario pedir el permiso
+            Snackbar.make(binding.root, "No se necesita permisos de notificaciones ni darlos", Snackbar.LENGTH_LONG).show()
+        }
+
+
+        val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentTitle("Nueva notificacion")
+            .setContentText("Se creó una nueva publicación")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+            .setContentIntent(pendingIntent)
+            .build()
+        notificationManager.notify(1, notification)
+    }
+
+    private fun createChannel(notificationManager: NotificationManager) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, "notificaciones", NotificationManager.IMPORTANCE_DEFAULT)
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
     private fun showLoading() {

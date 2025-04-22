@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="?attr/actionBarSize"
     tools:context=".presentation.fragments.NoticiasFragment">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        android:layout_marginBottom="24dp"
+        android:layout_gravity="end|bottom" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,5 +49,5 @@
         app:indicatorSize="50dp"
         android:layout_gravity="center"
         tools:visibility="visible" />
-
+    
 </FrameLayout>

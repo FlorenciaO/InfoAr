@@ -38,12 +38,12 @@ class LoginFragment private constructor(): Fragment() {
                  * TODO(Tarea: Darle la funcionalidad al checkbox para saltearse el login cuando sea requerido)
                  */
 
-
                 val usuario: String = etUsuario.text.toString()
-                val contrasenia: String = etContrasenia.text.toString()
+                navigateToHome(usuario)
+                /*val contrasenia: String = etContrasenia.text.toString()
 
                 if (usuario.isNotEmpty() && contrasenia.isNotEmpty() && contrasenia.length >= 8) {
-                    navigateToHome(usuario)
+
                 } else {
                     Toast.makeText(
                         context,
@@ -51,7 +51,7 @@ class LoginFragment private constructor(): Fragment() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                }
+                }*/
 
             }
 
