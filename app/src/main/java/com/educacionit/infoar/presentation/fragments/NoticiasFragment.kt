@@ -20,6 +20,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.educacionit.infoar.InfoArApp.Companion.CHANNEL_ID
 import com.educacionit.infoar.R
 import com.educacionit.infoar.presentation.adapters.NoticiasListAdapter
 import com.educacionit.infoar.presentation.adapters.NoticiasListAdapter.NoticiasListAdapterListener
@@ -35,10 +36,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
-
-    companion object {
-        const val CHANNEL_ID = "1"
-    }
 
     private var _binding: FragmentNoticiasBinding? = null
     private val binding get() = _binding!!
@@ -111,24 +108,10 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
 
     private fun createNotification() {
         val notificationManager: NotificationManager = requireContext().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        createChannel(notificationManager)
 
         val intent = Intent(requireContext(), HomeActivity::class.java)
         val pendingIntent = PendingIntent.getActivity(requireContext(), 0, intent,
             PendingIntent.FLAG_IMMUTABLE)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
-                //no pedirlo
-            } else {
-                Snackbar.make(binding.root, "Se necesita permisos de notificaciones", Snackbar.LENGTH_LONG).show()
-                // requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }else{
-            //no es necesario pedir el permiso
-            Snackbar.make(binding.root, "No se necesita permisos de notificaciones ni darlos", Snackbar.LENGTH_LONG).show()
-        }
-
 
         val notification = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
             .setSmallIcon(R.mipmap.ic_launcher)
@@ -139,13 +122,6 @@ class NoticiasFragment : Fragment(), NoticiasListAdapterListener {
             .setContentIntent(pendingIntent)
             .build()
         notificationManager.notify(1, notification)
-    }
-
-    private fun createChannel(notificationManager: NotificationManager) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(CHANNEL_ID, "notificaciones", NotificationManager.IMPORTANCE_DEFAULT)
-            notificationManager.createNotificationChannel(channel)
-        }
     }
 
     private fun showLoading() {
