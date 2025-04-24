@@ -1,13 +1,21 @@
 package com.educacionit.infoar.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.createGraph
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.fragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.educacionit.infoar.R
 import com.educacionit.infoar.databinding.ActivityHomeBinding
 import com.educacionit.infoar.presentation.fragments.NoticiasFragment
+import com.educacionit.infoar.presentation.fragments.ServiceFragment
 import com.educacionit.infoar.presentation.fragments.UsuariosFragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -15,21 +23,13 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
-    private var newsFragment = NoticiasFragment()
-    private var usersFragment = UsuariosFragment()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
 
+        setContentView(binding.root)
+
         with(binding) {
-            setContentView(root)
-
-            // Configurar DrawerLayout
-/*            val navigationView: NavigationView = navigationView
-            val bottomNavigation: BottomNavigationView = bottomNavigation
-            val toolbar: MaterialToolbar = toolbar*/
-
             // Configurar Toolbar con Navigation Drawer
             setSupportActionBar(toolbar)
             val toggle = ActionBarDrawerToggle(
@@ -42,19 +42,33 @@ class HomeActivity : AppCompatActivity() {
             drawerLayout.addDrawerListener(toggle)
             toggle.syncState()
 
-            // Cargar fragmento inicial (Home)
-            if (savedInstanceState == null) {
-                loadFragment(usersFragment)
-            }
+            val navHost =
+                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            val navController = navHost.navController
+
+            val topDestinations = setOf(
+                R.id.tab_user,
+                R.id.tab_news
+            )
+
+            createNavGraph(navController, topDestinations)
+
+            val appBarConfiguration = AppBarConfiguration(
+                topDestinations,
+                drawerLayout
+            )
+
+            toolbar.setupWithNavController(navController, appBarConfiguration)
 
             // Bottom Navigation Click Listener
             bottomNavigation.setOnItemSelectedListener { bottomItem ->
                 when (bottomItem.itemId) {
                     R.id.tab_user -> {
-                        loadFragment(usersFragment)
+                        navController.navigate(R.id.tab_user)
                     }
+
                     R.id.tab_news -> {
-                        loadFragment(newsFragment)
+                        navController.navigate(R.id.tab_news)
                     }
                 }
                 true
@@ -77,6 +91,10 @@ class HomeActivity : AppCompatActivity() {
                         "Cerrar Sesión",
                         Snackbar.LENGTH_SHORT
                     ).show()
+
+                    R.id.nav_service -> {
+                        navController.navigate(R.id.nav_service)
+                    }
                 }
                 drawerLayout.closeDrawer(GravityCompat.START)
                 true
@@ -84,10 +102,26 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    // Método para cambiar fragmentos manualmente
-    private fun loadFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.nav_host_fragment, fragment)
-            .commit()
+    private fun createNavGraph(navController: NavController, topDestionations: Set<Int>) {
+        val navGraph = navController.createGraph(startDestination = R.id.tab_user) {
+            fragment<UsuariosFragment>(R.id.tab_user) {
+                label = "Usuarios"
+            }
+            fragment<NoticiasFragment>(R.id.tab_news) {
+                label = "Noticias"
+            }
+            fragment<ServiceFragment>(R.id.nav_service) {
+                label = "Servicio"
+            }
+        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id in topDestionations) {
+                binding.bottomNavigation.visibility = View.VISIBLE
+            } else {
+                binding.bottomNavigation.visibility = View.GONE
+            }
+        }
+
+        navController.graph = navGraph
     }
 }

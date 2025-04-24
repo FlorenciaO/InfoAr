@@ -3,7 +3,6 @@ package com.educacionit.infoar.domain.presenters
 import com.educacionit.infoar.domain.contracts.repository.UsuariosRepository
 import com.educacionit.infoar.domain.contracts.vistas.UsuariosView
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -25,7 +24,8 @@ class UsuariosPresenterImplTest {
 
     @Before
     fun setUp() {
-        MockitoAnnotations.openMocks(this)
+        MockitoAnnotations.openMocks(this) // VERSION 5.11
+        //MockitoAnnotations.initMocks(this) // VERSION 2.19
         presenter = UsuariosPresenterImpl(
             uiContext = Dispatchers.Unconfined,
             ioContext = Dispatchers.Unconfined,

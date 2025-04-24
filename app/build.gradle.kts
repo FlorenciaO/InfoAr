@@ -68,5 +68,6 @@ dependencies {
     implementation("com.j256.ormlite:ormlite-android:5.1")
 
     // Testing (Mock)
+    //testImplementation("org.mockito:mockito-core:2.19.0") // Version anterior de mockito no funciona bien con corrutinas.
     testImplementation("org.mockito:mockito-core:5.11.0")
 }

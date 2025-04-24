@@ -41,8 +41,9 @@ class UsuariosRepositoryImpl(context: Context): UsuariosRepository {
 
         if (listaDeUsuarios.isNotEmpty()) {
             val listaDeUserEntities = listaDeUsuarios.map { it.toUserEntity() }
+            //dao.create(listaDeUserEntities)
+            // Persistir en la base de datos y reemplazar en caso de que ya exista (según primary key)
             listaDeUserEntities.forEach { dao.createOrUpdate(it) }
-
         }
 
         return listaDeUsuarios.map { it.toUsuario() }
