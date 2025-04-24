@@ -8,6 +8,8 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
     <application
         android:name=".InfoArApp"
         android:allowBackup="true"
@@ -27,7 +29,7 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".presentation.MainActivity2"
+        <activity android:name=".services.MainActivity2"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +39,15 @@
         </activity>
 
         <service android:name=".services.InfoArService" android:foregroundServiceType="shortService" />
-        <service android:name=".presentation.MyBoundService" />
+        <service android:name=".services.MyBoundService" />
+
+        <receiver android:name=".broadcast_receiver.AirplaneStateReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".broadcast_receiver.AlarmNotificationBroadcastReceiver"/>
     </application>
 
 </manifest>

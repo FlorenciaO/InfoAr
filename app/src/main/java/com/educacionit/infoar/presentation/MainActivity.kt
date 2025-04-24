@@ -1,10 +1,12 @@
 package com.educacionit.infoar.presentation
 
 import android.Manifest
+import android.app.AlarmManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -38,6 +40,12 @@ class MainActivity : AppCompatActivity(), LoginListener {
                     arrayOf(Manifest.permission.POST_NOTIFICATIONS),
                     1000
                     )
+            }
+            val alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && !alarmManager.canScheduleExactAlarms()) {
+                // Prompt the user to allow the permission manually
+                val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                startActivity(intent)
             }
         } else {
             //no es necesario pedir el permiso

@@ -16,6 +16,7 @@ import com.educacionit.infoar.R
 import com.educacionit.infoar.databinding.ActivityHomeBinding
 import com.educacionit.infoar.presentation.fragments.NoticiasFragment
 import com.educacionit.infoar.presentation.fragments.ServiceFragment
+import com.educacionit.infoar.presentation.fragments.SettingsFragment
 import com.educacionit.infoar.presentation.fragments.UsuariosFragment
 import com.google.android.material.snackbar.Snackbar
 
@@ -77,11 +78,8 @@ class HomeActivity : AppCompatActivity() {
             // Listener para el Navigation Drawer
             navigationView.setNavigationItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
-                    R.id.nav_settings -> Snackbar.make(
-                        root,
-                        "Inicio",
-                        Snackbar.LENGTH_SHORT
-                    ).show()
+                    R.id.nav_settings ->
+                        navController.navigate(R.id.nav_settings)
 
                     R.id.nav_home -> Snackbar.make(root, "Inicio", Snackbar.LENGTH_SHORT)
                         .show()
@@ -112,6 +110,9 @@ class HomeActivity : AppCompatActivity() {
             }
             fragment<ServiceFragment>(R.id.nav_service) {
                 label = "Servicio"
+            }
+            fragment<SettingsFragment>(R.id.nav_settings) {
+                label = "Ajustes"
             }
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->

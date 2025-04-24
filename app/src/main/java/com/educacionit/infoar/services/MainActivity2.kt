@@ -1,10 +1,11 @@
-package com.educacionit.infoar.presentation
+package com.educacionit.infoar.services
 
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.ACTION_AIRPLANE_MODE_CHANGED
+import android.content.IntentFilter
 import android.content.ServiceConnection
-import android.os.Build
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
@@ -13,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.educacionit.infoar.R
+import com.educacionit.infoar.broadcast_receiver.AirplaneStateReceiver
+import com.educacionit.infoar.presentation.MainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -20,6 +23,7 @@ class MainActivity2 : AppCompatActivity() {
 
     private lateinit var varbtnObtenerNumero: Button
     private lateinit var boundService: MyBoundService
+    private val airplaneStateReceiver = AirplaneStateReceiver()
     private var mBound: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,18 +39,14 @@ class MainActivity2 : AppCompatActivity() {
                         .show()
             }
             startActivity(Intent(this, MainActivity::class.java))
-            lifecycleScope.launch {
-                delay(1000)
-                Log.d("MainActivity2", "delay- Servicio status: ${mBound}")
-                delay(1000)
-                Log.d("MainActivity2", "delay- Servicio status: ${mBound}")
-                delay(1000)
-                Log.d("MainActivity2", "delay- Servicio status: ${mBound}")
-                delay(1000)
-                Log.d("MainActivity2", "delay- Servicio status: ${mBound}")
-            }
             finish()
         }
+
+        registerReceiver()
+    }
+
+    private fun registerReceiver() {
+        registerReceiver(airplaneStateReceiver, IntentFilter(ACTION_AIRPLANE_MODE_CHANGED))
     }
 
     private val connection = object : ServiceConnection {
@@ -61,11 +61,6 @@ class MainActivity2 : AppCompatActivity() {
         override fun onServiceDisconnected(name: ComponentName?) {
             mBound = false
             Log.d("MainActivity2", "onServiceDisconnected - Servicio status: ${mBound}")
-        }
-
-        override fun onBindingDied(name: ComponentName?) {
-            super.onBindingDied(name)
-            Log.d("MainActivity2", "onBindingDied - Servicio status: ${mBound}")
         }
     }
 
@@ -86,6 +81,7 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        unregisterReceiver(airplaneStateReceiver)
         Log.d("MainActivity2", "onDestroy - Servicio status: ${mBound}")
         super.onDestroy()
     }
