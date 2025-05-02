@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +20,8 @@ import com.educacionit.infoar.domain.contracts.vistas.UsuariosView
 import com.educacionit.infoar.domain.models.Usuario
 import com.educacionit.infoar.domain.presenters.UsuariosPresenterImpl
 import com.educacionit.infoar.presentation.adapters.UsuariosListAdapter
+import com.educacionit.infoar.presentation.fragments.communication.UsuariosListener
+import kotlin.math.ln
 
 class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterListener, UsuariosView {
 
@@ -26,6 +29,8 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
     private val binding get() = _binding!!
     private val usersAdapter = UsuariosListAdapter(this)
     private lateinit var presenter: UsuariosPresenter
+
+    private var listener: UsuariosListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +83,7 @@ class UsuariosFragment : Fragment(), UsuariosListAdapter.UsuariosListAdapterList
         binding.circularProgressIndicator.visibility = View.INVISIBLE
     }
 
-    override fun onGoToMapClicked(userId: String, userName: String) {
-
+    override fun onGoToMapClicked(username: String, address: String, lat: Double, lng: Double) {
+        (activity as? UsuariosListener)?.onGoToMapClicked(username, address, lat, lng)
     }
 }

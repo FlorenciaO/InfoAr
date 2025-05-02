@@ -5,7 +5,6 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
@@ -17,12 +16,21 @@ import com.educacionit.infoar.databinding.ActivityHomeBinding
 import com.educacionit.infoar.presentation.fragments.NoticiasFragment
 import com.educacionit.infoar.presentation.fragments.ServiceFragment
 import com.educacionit.infoar.presentation.fragments.SettingsFragment
+import com.educacionit.infoar.presentation.fragments.UserMapFragment
+import com.educacionit.infoar.presentation.fragments.UserMapFragment.Companion.ID_FRAGMENT
+import com.educacionit.infoar.presentation.fragments.UserMapFragment.Companion.PARAM_ADDRESS
+import com.educacionit.infoar.presentation.fragments.UserMapFragment.Companion.PARAM_LAT
+import com.educacionit.infoar.presentation.fragments.UserMapFragment.Companion.PARAM_LNG
+import com.educacionit.infoar.presentation.fragments.UserMapFragment.Companion.PARAM_USERNAME
 import com.educacionit.infoar.presentation.fragments.UsuariosFragment
+import com.educacionit.infoar.presentation.fragments.communication.UsuariosListener
 import com.google.android.material.snackbar.Snackbar
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), UsuariosListener {
 
     private lateinit var binding: ActivityHomeBinding
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +53,7 @@ class HomeActivity : AppCompatActivity() {
 
             val navHost =
                 supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-            val navController = navHost.navController
+            navController = navHost.navController
 
             val topDestinations = setOf(
                 R.id.tab_user,
@@ -100,6 +108,16 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    private fun navigateToUserMapFragment(username: String, address: String, lat: Double, lng: Double) {
+        val bundle = Bundle().apply {
+            putString(PARAM_USERNAME, username)
+            putString(PARAM_ADDRESS, address)
+            putDouble(PARAM_LAT, lat)
+            putDouble(PARAM_LNG, lng)
+        }
+        navController.navigate(ID_FRAGMENT, bundle)
+    }
+
     private fun createNavGraph(navController: NavController, topDestionations: Set<Int>) {
         val navGraph = navController.createGraph(startDestination = R.id.tab_user) {
             fragment<UsuariosFragment>(R.id.tab_user) {
@@ -114,6 +132,9 @@ class HomeActivity : AppCompatActivity() {
             fragment<SettingsFragment>(R.id.nav_settings) {
                 label = "Ajustes"
             }
+            fragment<UserMapFragment>(ID_FRAGMENT) {
+                label = "Dirección de Usuario"
+            }
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id in topDestionations) {
@@ -124,5 +145,9 @@ class HomeActivity : AppCompatActivity() {
         }
 
         navController.graph = navGraph
+    }
+
+    override fun onGoToMapClicked(username: String, address: String, lat: Double, lng: Double) {
+        navigateToUserMapFragment(username, address, lat, lng)
     }
 }

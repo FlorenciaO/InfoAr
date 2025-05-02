@@ -14,7 +14,7 @@ class UsuariosListAdapter(
 ) : RecyclerView.Adapter<UsuarioViewHolder>() {
 
     interface UsuariosListAdapterListener {
-        fun onGoToMapClicked(userId: String, userName: String)
+        fun onGoToMapClicked(username: String, address: String, lat: Double, lng: Double)
     }
 
     inner class UsuarioViewHolder(private val binding: ViewUserItemBinding) :
@@ -26,7 +26,7 @@ class UsuariosListAdapter(
                     usernameTv.text = userName
                     companyTv.text = companyName
                     goToMapTv.setOnClickListener {
-                        listener.onGoToMapClicked(id, userName)
+                        listener.onGoToMapClicked(userName, "${address.street}, ${address.city}", address.lat, address.lng)
                     }
                 }
             }
